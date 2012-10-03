@@ -106,6 +106,7 @@
 	self.titleLabel.shadowOffset = CGSizeMake(0, -1);
 	self.titleLabel.shadowColor = MO_RGBCOLOR(192, 73, 84);
 	self.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 
@@ -116,7 +117,6 @@
 	[self setupForStandardButtons];
 }
 
-
 - (void)setupAsRedButton {
 	[self setBackgroundColor:MO_RGBCOLOR(160, 1, 20) forState:UIControlStateNormal];
 	[self setBackgroundColor:MO_RGBCOLOR(120, 0, 0) forState:UIControlStateHighlighted];
@@ -124,6 +124,21 @@
 	[self setupForStandardButtons];
 }
 
+- (void)setupAsButtonWithHueValue:(CGFloat)hueValue;
+{
+    CGFloat saturation = 1.0f;
+    CGFloat normalBrightness = 0.55f;
+    CGFloat highlightedBrightness = 0.20f;
+    if (hueValue >= 0.0f && hueValue <= 360.0f) {
+        hueValue /= 360.0f;
+    } else {
+        hueValue = 0.0f;
+    }
+	[self setBackgroundColor:[UIColor colorWithHue:hueValue saturation:saturation brightness:normalBrightness alpha:1.0f] forState:UIControlStateNormal];
+	[self setBackgroundColor:[UIColor colorWithHue:hueValue saturation:saturation brightness:highlightedBrightness alpha:1.0f] forState:UIControlStateHighlighted];
+	[self setBackgroundColor:[UIColor colorWithHue:hueValue saturation:saturation brightness:normalBrightness alpha:1.0f] forState:UIControlStateDisabled];
+	[self setupForStandardButtons];
+}
 
 - (void)setupAsSmallGreenButton {
 	[self setupAsGreenButton];
